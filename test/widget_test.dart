@@ -3,14 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:tokomedia/main.dart';
 import 'package:tokomedia/providers/product_provider.dart';
-import 'package:tokomedia/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokomedia/providers/auth_provider.dart';
 import 'package:tokomedia/screens/responsive_layout.dart';
 import 'package:tokomedia/services/auth_api_service.dart';
 import 'package:tokomedia/services/product_api_service.dart';
 
 void main() {
   setUp(() {
-    MobileAuthSession.reset();
+    SharedPreferences.setMockInitialValues({});
     AuthApiService.isTestMode = true;
     ProductApiService.isTestMode = true;
   });
@@ -20,7 +21,10 @@ void main() {
 
     await tester.pumpWidget(
       MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => ProductProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
         child: const TokomediaApp(),
       ),
     );
@@ -67,7 +71,10 @@ void main() {
 
     await tester.pumpWidget(
       MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => ProductProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
         child: const MaterialApp(home: ResponsiveLayout()),
       ),
     );
@@ -83,7 +90,10 @@ void main() {
 
     await tester.pumpWidget(
       MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => ProductProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
         child: const TokomediaApp(),
       ),
     );

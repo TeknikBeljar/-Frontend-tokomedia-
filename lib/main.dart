@@ -4,18 +4,20 @@ import 'package:provider/provider.dart';
 
 import 'config/constants.dart';
 import 'config/theme.dart';
+import 'providers/auth_provider.dart';
 import 'providers/product_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/responsive_layout.dart';
 import 'screens/shared/upload_product_screen.dart';
+import 'screens/shared/delete_product_screen.dart';
 import 'screens/web/login_web.dart';
 import 'screens/web/register_web.dart';
-
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: const TokomediaApp(),
     ),
@@ -36,7 +38,8 @@ class TokomediaApp extends StatelessWidget {
         '/home': (_) => const ResponsiveLayout(),
         '/login': (_) => const _AdaptiveLoginRoute(),
         '/register': (_) => const _AdaptiveRegisterRoute(),
-        '/upload-product': (_) => const UploadProductScreen(),
+        '/upload-product': (context) => const UploadProductScreen(),
+        '/delete-product': (context) => const DeleteProductScreen(),
       },
     );
   }
@@ -47,13 +50,29 @@ class _AppEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (_usesMobileExperience(context, constraints.maxWidth)) {
-          return const RegisterScreen();
+    return Consumer<AuthProvider>(
+      builder: (context, auth, _) {
+        if (auth.isLoading) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(color: AppColors.green),
+            ),
+          );
         }
 
-        return const RegisterWeb();
+        if (auth.isAuthenticated) {
+          return const ResponsiveLayout();
+        }
+
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            if (_usesMobileExperience(context, constraints.maxWidth)) {
+              return const RegisterScreen();
+            }
+
+            return const RegisterWeb();
+          },
+        );
       },
     );
   }

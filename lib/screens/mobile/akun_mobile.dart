@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import '../../config/constants.dart';
+import '../../providers/auth_provider.dart';
 
 class AkunMobile extends StatelessWidget {
   const AkunMobile({super.key});
@@ -42,9 +44,24 @@ class AkunMobile extends StatelessWidget {
                   onTap: () => Navigator.pushNamed(context, '/upload-product'),
                 ),
                 const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.delete_sweep, color: Colors.red),
+                  title: const Text('Hapus Produk'),
+                  onTap: () => Navigator.pushNamed(context, '/delete-product'),
+                ),
+                const Divider(height: 1),
                 const ListTile(
                   leading: Icon(Icons.settings_outlined),
                   title: Text('Pengaturan'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.red),
+                  title: const Text('Keluar', style: TextStyle(color: Colors.red)),
+                  onTap: () {
+                    context.read<AuthProvider>().logout();
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                  },
                 ),
               ],
             ),

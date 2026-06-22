@@ -2,20 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import '../config/constants.dart';
+import '../providers/auth_provider.dart';
 import '../services/auth_api_service.dart';
 
-class MobileAuthSession {
-  static bool isAuthenticated = false;
-
-  static void authenticate() {
-    isAuthenticated = true;
-  }
-
-  static void reset() {
-    isAuthenticated = false;
-  }
-}
+// MobileAuthSession removed in favor of AuthProvider
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -80,7 +72,7 @@ class _MobileAuthScreenState extends State<_MobileAuthScreen> {
   }
 
   void _goHome() {
-    MobileAuthSession.authenticate();
+    context.read<AuthProvider>().login();
     Navigator.pushReplacementNamed(context, '/home');
   }
 

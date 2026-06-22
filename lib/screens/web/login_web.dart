@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import '../../config/constants.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/auth_api_service.dart';
 
 class LoginWeb extends StatelessWidget {
@@ -670,6 +672,7 @@ class _LoginVerificationCardState extends State<_LoginVerificationCard> {
       if (mounted) {
         setState(() => _isVerifying = false);
         if (res.success) {
+          context.read<AuthProvider>().login();
           Navigator.pushReplacementNamed(context, '/home');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

@@ -92,6 +92,16 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Delete product via API and update local state
+  Future<void> deleteProduct(String productId) async {
+    try {
+      await ProductApiService.deleteProduct(productId);
+      removeProduct(productId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Whether initial data fetch has been attempted
   bool get initialFetchDone => _initialFetchDone;
 }

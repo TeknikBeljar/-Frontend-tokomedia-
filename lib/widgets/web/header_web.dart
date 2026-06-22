@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import '../../config/constants.dart';
+import '../../providers/auth_provider.dart';
 
 class HeaderWeb extends StatelessWidget {
   final ValueChanged<String>? onSearch;
@@ -161,10 +163,36 @@ class HeaderWeb extends StatelessWidget {
                             ],
                           ),
                         ),
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete_sweep, size: 20, color: Colors.red),
+                              SizedBox(width: 8),
+                              Text('Hapus Produk'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuDivider(),
+                        const PopupMenuItem(
+                          value: 'logout',
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout, size: 20, color: Colors.red),
+                              SizedBox(width: 8),
+                              Text('Keluar', style: TextStyle(color: Colors.red)),
+                            ],
+                          ),
+                        ),
                       ],
                       onSelected: (value) {
                         if (value == 'upload') {
                           Navigator.pushNamed(context, '/upload-product');
+                        } else if (value == 'delete') {
+                          Navigator.pushNamed(context, '/delete-product');
+                        } else if (value == 'logout') {
+                          context.read<AuthProvider>().logout();
+                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                         }
                       },
                     ),

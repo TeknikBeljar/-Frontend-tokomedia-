@@ -98,12 +98,34 @@ class _HomeContent extends StatelessWidget {
           delegate: _TabsHeaderDelegate(),
         ),
         const SliverToBoxAdapter(child: _FlashSalePreview()),
-        SliverToBoxAdapter(
-          child: _MasonryProductGrid(
-            leftProducts: leftProducts,
-            rightProducts: rightProducts,
+        if (productProvider.error != null)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Error: ${productProvider.error}',
+                style: const TextStyle(color: Colors.red),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        else if (products.isEmpty && !productProvider.isLoading)
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                'Belum ada produk',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        else
+          SliverToBoxAdapter(
+            child: _MasonryProductGrid(
+              leftProducts: leftProducts,
+              rightProducts: rightProducts,
+            ),
           ),
-        ),
         if (productProvider.hasMore)
           SliverToBoxAdapter(
             child: Padding(
