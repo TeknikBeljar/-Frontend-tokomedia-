@@ -5,7 +5,7 @@ class ApiConfig {
     'API_BASE_URL',
   );
 
-  static const String _physicalDeviceBaseUrl = 'https://backend-tokomedia-production.up.railway.app';
+  static const String _physicalDeviceBaseUrl = 'https://backend-tokomedia-production-6bf0.up.railway.app';
 
   static String get baseUrl {
     final configured = _configuredBaseUrl.trim();
@@ -22,7 +22,7 @@ class ApiConfig {
       // If running flutter run -d chrome, origin is localhost:random_port, but backend is on 3000
       // So we fallback to localhost:3000 if it's localhost
       if (origin.contains('localhost')) {
-        return 'https://backend-tokomedia-production.up.railway.app';
+        return 'https://backend-tokomedia-production-6bf0.up.railway.app';
       }
       return origin;
     }

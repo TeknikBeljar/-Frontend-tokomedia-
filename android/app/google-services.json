@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848705267929",
+    "project_id": "tokomedia-bf2cc",
+    "storage_bucket": "tokomedia-bf2cc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848705267929:android:599379190f2ab5d938b6c8",
+        "android_client_info": {
+          "package_name": "com.tokomedia.tokomedia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuVmn-61LwkTLafQnHdG5jDgtNSnLXTg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

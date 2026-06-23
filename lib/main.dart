@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'config/constants.dart';
 import 'config/theme.dart';
@@ -12,7 +13,17 @@ import 'screens/shared/upload_product_screen.dart';
 import 'screens/shared/delete_product_screen.dart';
 import 'screens/web/login_web.dart';
 import 'screens/web/register_web.dart';
-void main() {
+import 'services/notification_service.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inisialisasi Firebase hanya di mobile (Android/iOS)
+  if (!kIsWeb) {
+    await Firebase.initializeApp();
+    await NotificationService.instance.initialize();
+  }
+
   runApp(
     MultiProvider(
       providers: [
